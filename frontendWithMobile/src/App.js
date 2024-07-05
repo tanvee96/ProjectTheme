@@ -8,7 +8,7 @@ import Sidebar from "./components/header/Sidebar";
 import theme from "./components/helpers/theme";
 
 const Login = lazy(() => import("./components/pages/Login"));
-const Dashboard = lazy(() => import("./components/dashboard/Dashboard"));
+const Dashboard = lazy(() => import("./components/pages/dashboard/Dashboard"));
 const CreateProject = lazy(() => import("./components/pages/CreateProject"));
 const ProjectList = lazy(() => import("./components/pages/ProjectList"));
 

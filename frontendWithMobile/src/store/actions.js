@@ -6,6 +6,7 @@ import {
   EDIT_PROJECT_STATUS_PROGRESS,
   GET_DASHBOARD_TOTAL_RECORDS_PROGRESS,
   GET_DEPT_WISE_SUCCESS_PERCENTAGE_PROGRESS,
+  GET_DIVISION_WISE_CHART_PROGRESS,
 } from "./types";
 
 export const login = (record) => ({ type: LOGIN_PROGRESS, payload: record });
@@ -32,4 +33,8 @@ export const getDashboardTotalCounts = (record) => {
 
 export const getDeptWiseSuccessPercentage = (record) => {
   return { type: GET_DEPT_WISE_SUCCESS_PERCENTAGE_PROGRESS, payload: record };
+};
+
+export const getDivisionWiseChart = (record) => {
+  return { type: GET_DIVISION_WISE_CHART_PROGRESS, payload: record };
 };

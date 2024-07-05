@@ -56,7 +56,7 @@ const login = async (req, res) => {
       
       res.status(200).json({ token, userInfo });
     } else {
-      res.status(401).json({ message: "Invalid Credentials" });
+      res.status(200).json({ message: "Invalid Credentials" });
     }
   } catch (error) {
     handleServerError(res, "Please try again later", error);

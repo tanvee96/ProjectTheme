@@ -10,17 +10,23 @@ import {
 } from "recharts";
 import { Paper, Box, Typography, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getDeptWiseSuccessPercentage } from "../../store/actions";
+import { getDeptWiseSuccessPercentage } from "../../../store/actions";
 
-const StyledPaper = styled(Paper)({
+const StyledPaper = styled(Paper)(({ theme }) => ({
   width: "50%",
   position: "absolute",
-  padding: "5px 20px",
+  padding: "5px 0 30px 0",
   margin: "20px",
-  height: "300px",
+  height: "320px",
   borderRadius: "12px",
   boxShadow: "rgba(222, 233, 241, 1) 0px 7px 29px 0px",
-});
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    position: "relative",
+    margin: "0 0 10px 0",
+    
+  },
+}));
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -64,7 +70,7 @@ const CustomLegend = () => (
   </StyledBox>
 );
 
-const Chart = () => {
+const Chart = ({isMobile}) => {
   const dispatch = useDispatch();
   const deptSuccessPercentage = useSelector(
     (state) => state.dashboard.dept_success_percentage
@@ -91,7 +97,7 @@ const Chart = () => {
   return (
     <>
       <Box>
-        <Typography variant="h6" style={{ color: "#000", paddingLeft: "20px" }}>
+        <Typography variant="h6" style={{ color: "#000", paddingLeft: isMobile ? "0px" : "20px", paddingBottom: isMobile ? "10px" : "0px", }}>
           Department wise - Total Vs Closed
         </Typography>
       </Box>
@@ -123,6 +129,7 @@ const Chart = () => {
         </ResponsiveContainer>
         <CustomLegend />
       </StyledPaper>
+      
     </>
   );
 };

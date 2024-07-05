@@ -11,16 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-/* dashboard */
-.dashboard-card-title{
-  color: #474d52;
-  font-size: 14px !important;
-}
-.dashboard-card-count{
-font-weight: bold !important;
-color: #474d52 !important;
-font-size: 33px !important;
-}
+
 
 .table-head {
   background-color: #ebf5ff !important;

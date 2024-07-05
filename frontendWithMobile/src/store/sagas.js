@@ -22,6 +22,9 @@ import {
   GET_DEPT_WISE_SUCCESS_PERCENTAGE_SUCCESS,
   GET_DEPT_WISE_SUCCESS_PERCENTAGE_FAILURE,
   GET_DEPT_WISE_SUCCESS_PERCENTAGE_PROGRESS,
+  GET_DIVISION_WISE_CHART_SUCCESS,
+  GET_DIVISION_WISE_CHART_FAILURE,
+  GET_DIVISION_WISE_CHART_PROGRESS,
 } from "./types";
 
 function* loginSaga(action) {
@@ -160,6 +163,28 @@ function* getDeptWiseSuccessPercentSaga() {
 function* watchGetDeptWiseSuccessPercent() {
   yield takeLatest(GET_DEPT_WISE_SUCCESS_PERCENTAGE_PROGRESS, getDeptWiseSuccessPercentSaga);
 }
+
+function* getDivisionWiseChartSaga() {
+  try {
+    let getSessionValue = sessionStorage.getItem("loginUser");
+    let loggedUser = JSON.parse(getSessionValue)
+    let headers = {
+      "x-access-token": loggedUser?.token||null, 
+    };
+
+    const response = yield axiosClient.get(`/division_wise_chart`, { headers });
+    yield put({
+      type: GET_DIVISION_WISE_CHART_SUCCESS,
+      divisionWiseChart: response.data,
+    });
+  } catch (error) {
+    yield put({ type: GET_DIVISION_WISE_CHART_FAILURE });
+  }
+}
+function* watchGetDivisionWiseChart() {
+  yield takeLatest(GET_DIVISION_WISE_CHART_PROGRESS, getDivisionWiseChartSaga);
+}
+
 export default function* rootSaga() {
   yield all([
     watchLogin(),
@@ -169,5 +194,6 @@ export default function* rootSaga() {
     watchEditProjectStatus(),
     watchGetDashboardTotalCount(),
     watchGetDeptWiseSuccessPercent(),
+    watchGetDivisionWiseChart(),
   ]);
 }

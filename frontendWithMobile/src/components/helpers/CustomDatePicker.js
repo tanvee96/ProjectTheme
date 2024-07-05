@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { styled } from "@mui/system";
 import { CustomTextField } from "./CustomFields";
-import { InputAdornment } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 const DatePickerWrapper = styled("div")({
@@ -68,7 +68,16 @@ const DatePickerWrapper = styled("div")({
   },
 });
 
-const CustomDatePicker = ({ selectedDate, handleDateChange }) => {
+const CustomDatePicker = ({
+  selectedDate,
+  handleDateChange,
+  error,
+  helperText,
+  placeholder,
+  isMobile
+}) => {
+
+
   return (
     <DatePickerWrapper>
       <DatePicker
@@ -77,14 +86,19 @@ const CustomDatePicker = ({ selectedDate, handleDateChange }) => {
         customInput={
           <CustomTextField
             variant="outlined"
-            sx={{ pr: 2 }}
+            error={error}
+            helperText={helperText}
+            placeholder={placeholder}
+            isMobile={isMobile}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <CalendarMonthIcon />
                 </InputAdornment>
               ),
+              style: error ? { borderColor: "red" } : {},
             }}
+            sx={{ pr: isMobile ? 0 : 2 }}
           />
         }
         dateFormat="dd MMMM, yyyy"

@@ -64,9 +64,28 @@ const dashboardController = (() => {
     }
   };
 
+  const getDivisionWiseChart = async (req, res) => {
+    try {
+      const projects = await ProjectThemeTableModel.aggregate([
+       {
+        $group: {
+          _id: "$division",
+          count: { $sum : 1}
+        }
+       }
+      ]);
+  
+      res.json(projects);
+    } catch (error) {
+      handleServerError(res, error, 'Error fetching Division Wise Project');
+    }
+  };
+  
+
   return {
     getDashboardTotalRecords,
     getDeptWiseSuccessPercentage,
+    getDivisionWiseChart,
   };
 })();
 

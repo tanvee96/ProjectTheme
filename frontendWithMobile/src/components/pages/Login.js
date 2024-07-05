@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Typography, IconButton, InputAdornment, styled } from "@mui/material";
+import { Box, Typography, IconButton, InputAdornment, styled, useMediaQuery } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LoginLayout from "../helpers/LoginLayout";
 import { CustomButton, CustomTextField, CustomTypography } from "../helpers/CustomFields";
@@ -24,6 +24,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
   useEffect(() => {
     if (loginUser?.userInfo) {
@@ -62,27 +64,34 @@ const Login = () => {
 
   return (
     <LoginLayout error={!!loginUser}>
-      <Typography component="div" align="center" sx={{ m: 2, pb: 2 }} style={{ fontSize: "16px" }}>
+      <Typography
+        component="div"
+        align={isMobile ? "left" : "center"}
+        sx={{pb: 4 }}
+        style={{ fontSize: "16px" }}
+      >
         Login to get started
       </Typography>
       <form onSubmit={handleSubmit}>
-        <Box style={{ height: "90px" }}>
-          <CustomTypography color={emailError ? "error" : "textPrimary"}>Email</CustomTypography>
+        <Box style={{ height: "100px" }}>
+          <CustomTypography isMobile={isMobile} color={emailError ? "error" : "textPrimary"}>Email</CustomTypography>
           <CustomTextField
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             error={!!emailError}
             helperText={emailError}
+            isMobile={isMobile}
           />
         </Box>
-        <Box style={{ height: "90px" }}>
-          <CustomTypography color={passwordError ? "error" : "textPrimary"}>Password</CustomTypography>
+        <Box style={{ height: "100px" }}>
+          <CustomTypography isMobile={isMobile} color={passwordError ? "error" : "textPrimary"}>Password</CustomTypography>
           <CustomTextField
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             error={!!passwordError}
+            isMobile={isMobile}
             helperText={
               <Box display="flex" justifyContent="space-between">
                 <Typography variant="caption">{passwordError}</Typography>
@@ -107,10 +116,11 @@ const Login = () => {
           />
         </Box>
         <Box mt={3}>
-          <CustomButton type="submit" variant="contained">Login</CustomButton>
+          <CustomButton type="submit" variant="contained" isMobile={isMobile}>Login</CustomButton>
         </Box>
+        {loginUser && <ErrorText> {loginUser?.message||'Invalid Login!'}</ErrorText>}
       </form>
-      {loginUser && <ErrorText>{loginUser.message}</ErrorText>}
+      
     </LoginLayout>
   );
 };

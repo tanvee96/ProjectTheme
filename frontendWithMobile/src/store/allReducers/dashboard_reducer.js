@@ -5,11 +5,15 @@ import {
   GET_DEPT_WISE_SUCCESS_PERCENTAGE_FAILURE,
   GET_DEPT_WISE_SUCCESS_PERCENTAGE_PROGRESS,
   GET_DEPT_WISE_SUCCESS_PERCENTAGE_SUCCESS,
+  GET_DIVISION_WISE_CHART_FAILURE,
+  GET_DIVISION_WISE_CHART_PROGRESS,
+  GET_DIVISION_WISE_CHART_SUCCESS,
   RESET_MESSAGE,
 } from "../types";
 
 const initialState = {
   dept_success_percentage: [],
+  divisionWiseChart: [],
   totalProjects: 0,
   closedProjects: 0,
   runningProjects: 0,
@@ -46,6 +50,17 @@ const dashboard_reducer = (state = initialState, action) => {
     case GET_DEPT_WISE_SUCCESS_PERCENTAGE_FAILURE:
       return { ...state, error: true, loading: false };
     case GET_DEPT_WISE_SUCCESS_PERCENTAGE_PROGRESS:
+      return { ...state, error: false, loading: true };
+
+    case GET_DIVISION_WISE_CHART_SUCCESS:
+      return {
+        ...state,
+        divisionWiseChart: action.divisionWiseChart,
+        loading: false,
+      };
+    case GET_DIVISION_WISE_CHART_FAILURE:
+      return { ...state, error: true, loading: false };
+    case GET_DIVISION_WISE_CHART_PROGRESS:
       return { ...state, error: false, loading: true };
 
     case RESET_MESSAGE:
